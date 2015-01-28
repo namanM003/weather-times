@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Layout">
+    <EditText android:id="@+id/edit_message"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/HintMessage" />
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/edit_message"
+        android:text="@string/button_loc"
+        android:onClick="getWeather"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/GPS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Layout"
+        android:layout_alignParentRight="true"
+        android:text="@string/GPS"
+        android:onClick="getLocation"/>
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/GPS"
+        android:paddingTop="190dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="40dp"
+        android:text="Welcome to Weather Times. Have a Good Day"/>
+
+</RelativeLayout>
