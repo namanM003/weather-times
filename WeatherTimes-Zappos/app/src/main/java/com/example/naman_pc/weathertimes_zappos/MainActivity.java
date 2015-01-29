@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +29,24 @@ public class MainActivity extends ActionBarActivity {
         textView = (TextView)this.findViewById(R.id.textview);
         String text="You are trying to find by search";
         this.textView.setText(text);
-        JSONObject data=WeatherData.getdata();
+        EditText getdata= (EditText)findViewById(R.id.edit_message);
+        String city=getdata.getText().toString();
+        //Context con=getApplicationContext();
+        JSONObject data=WeatherData.getData(city);
         if(data == null){
             Toast.makeText(this,"City Not Found",Toast.LENGTH_LONG).show();
         }
         else{
-            data.
+            try {
+                JSONObject main = data.getJSONObject("main");
+                textView.setText(String.format("%.2f",main.getDouble("temp"))+" ℃");
+            }
+            catch(Exception e){
+                text="Unable to fetch data!!!";
+                this.textView.setText(text);
+
+            }
+
         }
     }
 
