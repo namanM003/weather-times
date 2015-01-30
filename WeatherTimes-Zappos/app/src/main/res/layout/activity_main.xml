@@ -33,9 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/GPS"
-        android:paddingTop="190dp"
-        android:paddingRight="20dp"
-        android:paddingLeft="40dp"
-        android:text="Welcome to Weather Times. Have a Good Day"/>
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textColor="#800000"
+        android:text="Welcome to Weather Times.\n Have a Good Day!!"/>
 
 </RelativeLayout>

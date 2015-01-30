@@ -5,6 +5,6 @@
     <string name="HintMessage">Eg: Las Vegas!</string>
     <string name="button_loc">Get Weather</string>
     <string name="action_settings">Settings</string>
-    <string name="GPS">Get Location via GPS</string>
+    <string name="GPS">Get Weather via GPS</string>
 
 </resources>
