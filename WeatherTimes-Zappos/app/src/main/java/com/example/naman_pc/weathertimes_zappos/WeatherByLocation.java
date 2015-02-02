@@ -19,11 +19,10 @@ public class WeatherByLocation implements Runnable {
 
     public void run() {
         try {
-            //System.out.println(url);
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            //connect.addRequestProperty("x-api-key","com.example.naman_pc.weathertimes_zappos");
             //connect.setRequestMethod("GET");
-            connection.setReadTimeout(5*1000);
+            connection.setReadTimeout(5*1000);  //Wait for a maximum of 5 sec for getting data
             //connection.connect();
             connection.setDoInput(true);
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -38,9 +37,6 @@ public class WeatherByLocation implements Runnable {
 
             data = new JSONObject(ret_str.toString());
             if (data.getInt("cod") != 200) {
-                //data=null;
-                //TextView text=(TextView)context.findViewById(R.id.textview);
-                //text.setText("ERROR IN COD");
                 Log.e("tag", "ERROR IN CONNECTION");
                 data = null;
             }

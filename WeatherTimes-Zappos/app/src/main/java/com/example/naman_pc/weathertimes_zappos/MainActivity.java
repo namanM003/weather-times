@@ -23,12 +23,8 @@ import org.json.JSONObject;
 
 
 public class MainActivity extends ActionBarActivity {//implements LocationListener {
-   // private LocationManager locationmanager;
-    //Location location;
-    //double longitude,latitude;
+
     TextView textView;
-   // private LocationListener locationlistener;
-   // private String location;
 
     public void getWeather(View view){
         //This method is responsible to search location as specified in text box and display weather of that location
@@ -36,24 +32,24 @@ public class MainActivity extends ActionBarActivity {//implements LocationListen
         textView = (TextView)this.findViewById(R.id.textview);
         String text="You are trying to find by search";
         ConnectivityManager cm=(ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netinfo[]=cm.getAllNetworkInfo();
-        boolean wifi=false,mobile_net=false;
+        NetworkInfo netinfo[]=cm.getAllNetworkInfo();   //To check whether we are having connection to any network
+        boolean wifi=false,mobile_net=false;            //We will check connection to either Wifi or Mobile Network
         for(int i=0;i<netinfo.length;i++){
             if(netinfo[i].getTypeName().equalsIgnoreCase("WIFI"))
             {
-                if(netinfo[i].isConnected()){
+                if(netinfo[i].isConnected()){           //If we have Wifi Connected set @param:wifi=true
                     wifi=true;
                 }
             }
             if(netinfo[i].getTypeName().equalsIgnoreCase("MOBILE")){
-                if(netinfo[i].isConnected()){
+                if(netinfo[i].isConnected()){       //If we have Mobile net set @param:mobile_net=true;
                     mobile_net=true;
                 }
             }
 
         }
         if(!wifi && !mobile_net){
-            this.textView.setText("Network not available!!");
+            this.textView.setText("Network not available!!");       //If no network connection available set text network not available
             return;
         }
         this.textView.setText(text);
@@ -61,19 +57,20 @@ public class MainActivity extends ActionBarActivity {//implements LocationListen
         String city=getdata.getText().toString();
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getdata.getWindowToken(), 0);
-        if(city.trim().equals("")){
+        if(city.trim().equals("")){     //validate input by trimming whitespaces before and after city name provided
             Toast.makeText(this,"Field cannot be left blank!! Enter City Name",Toast.LENGTH_LONG).show();
             return;
         }
         //Context con=getApplicationContext();
         JSONObject data=WeatherData.getData(city);
-        if(data == null){
+        if(data == null){   //If we dont get city field then either city is not available or network timed out.
             Toast.makeText(this,"City Not Found",Toast.LENGTH_LONG).show();
         }
         else{
             try {
                 JSONObject main = data.getJSONObject("main");
                 JSONObject description=data.getJSONArray("weather").getJSONObject(0);
+                ///Setting Up Current Temperature and Description of weather in TextView////
                 textView.setText(String.format("Current Temperature is\n %.2f",main.getDouble("temp"))+" ℃"+"\n"+description.getString("description").toUpperCase());
             }
             catch(Exception e){
@@ -91,18 +88,18 @@ public class MainActivity extends ActionBarActivity {//implements LocationListen
             textView = (TextView)this.findViewById(R.id.textview);
             LocationManager locationmanager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
             boolean isGPSEnabled;
-            isGPSEnabled = locationmanager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            isGPSEnabled = locationmanager.isProviderEnabled(LocationManager.GPS_PROVIDER); //Set @param: isGpsEnabled
             if(!isGPSEnabled){
                // textView=(TextView) this.findViewById(R.id.textview);
-                this.textView.setText("GPS not enabled!!");
+                this.textView.setText("GPS not enabled!!"); //If GPS is not available set TextView as GPS not enabled in textView
                 return;
             }
             String locationProvider=LocationManager.GPS_PROVIDER;
             double lat,longitude;
-            Location location = locationmanager.getLastKnownLocation(locationProvider);
+            Location location = locationmanager.getLastKnownLocation(locationProvider);     //Get Last Known Location of the user via GPS
             if (location == null) {
               //  textView = (TextView) this.findViewById(R.id.textview);
-                String text = "Unable to find location";
+                String text = "Unable to get location";
                 this.textView.setText(text);
                 return;
 
@@ -175,3 +172,7 @@ public class MainActivity extends ActionBarActivity {//implements LocationListen
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+///////////////////////////////////////////////////API USED////////////////////////////////////////////////////////////
+/**********************************************Open Weather API******************************************************/
